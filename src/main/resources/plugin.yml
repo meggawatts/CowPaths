@@ -1,7 +1,6 @@
-name: CowPaths
+name: ${project.artifactId}
 main: com.ryanmichela.cowpaths.plugin.CowPaths
-version: 2
-website: https://github.com/rmichela/CowPaths
-author: Ryan Michela
-description: >
-             Tracks player statistics and provides a web-based report.
+version: ${project.version}
+website: ${project.url}
+authors: [Ryan Michela, meggawatts]
+description: ${project.description}
