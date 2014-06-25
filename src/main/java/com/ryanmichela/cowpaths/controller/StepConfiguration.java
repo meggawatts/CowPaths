@@ -17,10 +17,9 @@ package com.ryanmichela.cowpaths.controller;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.bukkit.Material;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.util.config.Configuration;
 
 public class StepConfiguration {
 
@@ -29,7 +28,7 @@ public class StepConfiguration {
 
     public StepConfiguration(Plugin plugin) {
         this.plugin = plugin;
-        this.bkConfig = plugin.getConfiguration();
+        this.bkConfig = plugin.getConfig();
     }
 
     /**
@@ -38,7 +37,7 @@ public class StepConfiguration {
      * @return
      */
     public List<WearPattern> getWearPatterns() {
-        List<String> wearStrings = bkConfig.getStringList("wearPatterns", null);
+        List<String> wearStrings = bkConfig.getStringList("wearPatterns");
         List<WearPattern> wearPatterns = new ArrayList<WearPattern>(wearStrings.size());
 
         for (String wearString : wearStrings) {
