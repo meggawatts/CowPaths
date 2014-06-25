@@ -21,8 +21,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bukkit.World;
-import org.bukkit.event.Event.Priority;
-import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.ryanmichela.cowpaths.api.CowPathsApi;
@@ -54,7 +52,7 @@ public class CowPaths extends JavaPlugin {
                 out.write(StepConfiguration.initialConfigFile());
                 out.close();
 
-                getConfiguration().load();
+                getConfig().load(new File(getDataFolder(), "config.yml"));
             }
 
             config = new StepConfiguration(this);
@@ -75,12 +73,8 @@ public class CowPaths extends JavaPlugin {
     public void onEnable() {
         if (!loadError) {
             // Wire up event listeners
-            StepPlayerListener spl = new StepPlayerListener(controller);
-            getServer().getPluginManager().registerEvent(Type.PLAYER_MOVE, spl, Priority.Normal, this);
-            getServer().getPluginManager().registerEvent(Type.PLAYER_TELEPORT, spl, Priority.Normal, this);
-            StepWorldListener swl = new StepWorldListener(controller);
-            getServer().getPluginManager().registerEvent(Type.CHUNK_LOAD, swl, Priority.Normal, this);
-            getServer().getPluginManager().registerEvent(Type.CHUNK_UNLOAD, swl, Priority.Normal, this);
+            getServer().getPluginManager().registerEvents(new StepPlayerListener(controller), this);
+            getServer().getPluginManager().registerEvents(new StepWorldListener(controller), this);
 
             // Prime the active chunk data
             for (World world : getServer().getWorlds()) {

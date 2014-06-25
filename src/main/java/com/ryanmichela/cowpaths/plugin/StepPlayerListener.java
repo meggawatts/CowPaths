@@ -14,15 +14,15 @@
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package com.ryanmichela.cowpaths.plugin;
 
+import com.ryanmichela.cowpaths.controller.StepController;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
-import org.bukkit.event.player.PlayerListener;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
-import com.ryanmichela.cowpaths.controller.StepController;
-
-public class StepPlayerListener extends PlayerListener {
+public class StepPlayerListener implements Listener {
 
     private StepController controller;
 
@@ -30,7 +30,7 @@ public class StepPlayerListener extends PlayerListener {
         this.controller = controller;
     }
 
-    @Override
+    @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         if (!samePlace(event.getFrom(), event.getTo())) {
             // Get the block below the block the player's feet are in.
@@ -38,7 +38,7 @@ public class StepPlayerListener extends PlayerListener {
         }
     }
 
-    @Override
+    @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent event) {
         onPlayerMove((PlayerMoveEvent) event);
     }

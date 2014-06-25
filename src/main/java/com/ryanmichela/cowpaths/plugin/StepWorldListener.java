@@ -14,13 +14,13 @@
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package com.ryanmichela.cowpaths.plugin;
 
+import com.ryanmichela.cowpaths.controller.StepController;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
-import org.bukkit.event.world.WorldListener;
 
-import com.ryanmichela.cowpaths.controller.StepController;
-
-public class StepWorldListener extends WorldListener {
+public class StepWorldListener implements Listener {
 
     private StepController controller;
 
@@ -28,12 +28,12 @@ public class StepWorldListener extends WorldListener {
         this.controller = controller;
     }
 
-    @Override
+    @EventHandler
     public void onChunkLoad(ChunkLoadEvent event) {
         controller.loadChunk(event.getChunk());
     }
 
-    @Override
+    @EventHandler
     public void onChunkUnload(ChunkUnloadEvent event) {
         controller.unloadChunk(event.getChunk());
     }
