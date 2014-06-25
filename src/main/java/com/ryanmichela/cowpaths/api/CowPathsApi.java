@@ -12,7 +12,6 @@
 //
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package com.ryanmichela.cowpaths.api;
 
 import org.bukkit.block.Block;
@@ -20,18 +19,18 @@ import org.bukkit.block.Block;
 import com.ryanmichela.cowpaths.controller.StepController;
 
 public class CowPathsApi {
-	
-	private StepController controller;
-	
-	public CowPathsApi(StepController controller) {
-		this.controller = controller;
-	}
-	
-	public int getTotalPlayerStepsOnBlock(Block block) {
-		return controller.getTotalSteps(block);
-	}
-	
-	public int getStepsSinceLastErosion(Block block) {
-		return controller.getStepCount(block);
-	}
+
+    private StepController controller;
+
+    public CowPathsApi(StepController controller) {
+        this.controller = controller;
+    }
+
+    public int getTotalPlayerStepsOnBlock(Block block) {
+        return controller.getTotalSteps(block);
+    }
+
+    public int getStepsSinceLastErosion(Block block) {
+        return controller.getStepCount(block);
+    }
 }

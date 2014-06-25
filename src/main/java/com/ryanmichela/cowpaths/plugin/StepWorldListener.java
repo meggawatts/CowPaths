@@ -12,7 +12,6 @@
 //
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package com.ryanmichela.cowpaths.plugin;
 
 import org.bukkit.event.world.ChunkLoadEvent;
@@ -23,20 +22,20 @@ import com.ryanmichela.cowpaths.controller.StepController;
 
 public class StepWorldListener extends WorldListener {
 
-	private StepController controller;
-	
-	public StepWorldListener(StepController controller) {
-		this.controller = controller;
-	}
-	
-	@Override
-	public void onChunkLoad(ChunkLoadEvent event) {
-		controller.loadChunk(event.getChunk());
-	}
+    private StepController controller;
 
-	@Override
-	public void onChunkUnload(ChunkUnloadEvent event) {
-		controller.unloadChunk(event.getChunk());
-	}
+    public StepWorldListener(StepController controller) {
+        this.controller = controller;
+    }
+
+    @Override
+    public void onChunkLoad(ChunkLoadEvent event) {
+        controller.loadChunk(event.getChunk());
+    }
+
+    @Override
+    public void onChunkUnload(ChunkUnloadEvent event) {
+        controller.unloadChunk(event.getChunk());
+    }
 
 }

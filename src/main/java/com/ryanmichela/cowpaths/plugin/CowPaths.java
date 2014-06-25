@@ -12,7 +12,6 @@
 //
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package com.ryanmichela.cowpaths.plugin;
 
 import java.io.File;
@@ -33,74 +32,74 @@ import com.ryanmichela.cowpaths.controller.StepConfiguration.WearPattern;
 
 public class CowPaths extends JavaPlugin {
 
-	private StepController controller;
-	private StepConfiguration config;
-	private CowPathsApi api;
-	private Logger log;
-	private boolean loadError;
-	
-	@Override
-	public void onLoad() {
-		try {
-			log = getServer().getLogger();
-			
-			// Initialize configuration
-			if(!getDataFolder().exists()) {
-				getDataFolder().mkdir();
-				
-				log.info("[Cow Paths] Populating initial config file");
-				OutputStreamWriter out = new OutputStreamWriter(
-											new FileOutputStream(
-												new File(getDataFolder(), "config.yml")));
-				out.write(StepConfiguration.initialConfigFile());
-				out.close();
-				
-				getConfiguration().load();
-			}
-	
-			config = new StepConfiguration(this);
-			controller = new StepController(this, config);
-			api = new CowPathsApi(controller);
-			
-			for(WearPattern wp: config.getWearPatterns()) {
-				log.info("[Cow Paths] " + wp);
-			}
-		
-		} catch (Exception e) {
-			log.log(Level.SEVERE, "[Cow Paths] Error in initialization.", e);
-			loadError = true;
-		}
-	}
-	
-	@Override
-	public void onEnable() {
-		if (!loadError) {
-			// Wire up event listeners
-			StepPlayerListener spl = new StepPlayerListener(controller);
-			getServer().getPluginManager().registerEvent(Type.PLAYER_MOVE, spl, Priority.Normal, this);
-			getServer().getPluginManager().registerEvent(Type.PLAYER_TELEPORT, spl, Priority.Normal, this);
-			StepWorldListener swl = new StepWorldListener(controller);
-			getServer().getPluginManager().registerEvent(Type.CHUNK_LOAD, swl, Priority.Normal, this);
-			getServer().getPluginManager().registerEvent(Type.CHUNK_UNLOAD, swl, Priority.Normal, this);
-			
-			// Prime the active chunk data
-			for(World world : getServer().getWorlds()) {
-				controller.prime(world);
-			}
-			
-			log.info("[Cow Paths] Now paving cow paths. Happy trails!");
-		}
-	}
+    private StepController controller;
+    private StepConfiguration config;
+    private CowPathsApi api;
+    private Logger log;
+    private boolean loadError;
 
-	@Override
-	public void onDisable() {
-		if(!loadError) {
-			log.info("[Cow Paths] Flushing block data.");
-			controller.flush();
-		}
-	}
-	
-	public CowPathsApi api() {
-		return api;
-	}
+    @Override
+    public void onLoad() {
+        try {
+            log = getServer().getLogger();
+
+            // Initialize configuration
+            if (!getDataFolder().exists()) {
+                getDataFolder().mkdir();
+
+                log.info("[Cow Paths] Populating initial config file");
+                OutputStreamWriter out = new OutputStreamWriter(
+                        new FileOutputStream(
+                                new File(getDataFolder(), "config.yml")));
+                out.write(StepConfiguration.initialConfigFile());
+                out.close();
+
+                getConfiguration().load();
+            }
+
+            config = new StepConfiguration(this);
+            controller = new StepController(this, config);
+            api = new CowPathsApi(controller);
+
+            for (WearPattern wp : config.getWearPatterns()) {
+                log.info("[Cow Paths] " + wp);
+            }
+
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "[Cow Paths] Error in initialization.", e);
+            loadError = true;
+        }
+    }
+
+    @Override
+    public void onEnable() {
+        if (!loadError) {
+            // Wire up event listeners
+            StepPlayerListener spl = new StepPlayerListener(controller);
+            getServer().getPluginManager().registerEvent(Type.PLAYER_MOVE, spl, Priority.Normal, this);
+            getServer().getPluginManager().registerEvent(Type.PLAYER_TELEPORT, spl, Priority.Normal, this);
+            StepWorldListener swl = new StepWorldListener(controller);
+            getServer().getPluginManager().registerEvent(Type.CHUNK_LOAD, swl, Priority.Normal, this);
+            getServer().getPluginManager().registerEvent(Type.CHUNK_UNLOAD, swl, Priority.Normal, this);
+
+            // Prime the active chunk data
+            for (World world : getServer().getWorlds()) {
+                controller.prime(world);
+            }
+
+            log.info("[Cow Paths] Now paving cow paths. Happy trails!");
+        }
+    }
+
+    @Override
+    public void onDisable() {
+        if (!loadError) {
+            log.info("[Cow Paths] Flushing block data.");
+            controller.flush();
+        }
+    }
+
+    public CowPathsApi api() {
+        return api;
+    }
 }
